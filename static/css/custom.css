@@ -1,8 +1,25 @@
-.container {
-    border-top: 10px solid #ccc;
-    padding-top: 5px;
-}
 .divider {
-    border-top: 2px solid #ddd;
+    border-top: 2px solid #eee;
     margin: 10px 0;
 }
+.lang-selector {
+    background-color: #eee;
+    margin-bottom: 5px;
+    padding: 3px 8px;
+}
+.lang-selector .btn > b {
+    display: block;
+    float: left;
+    margin: 3px 2px 0 0;
+}
+
+.flag {
+    width: 16px;
+    height: 11px;
+    background:url("../img/flags.png") no-repeat;
+}
+
+.flag.flag-de {background-position: -16px 0}
+.flag.flag-gb {background-position: -32px 0}
+.flag.flag-ru {background-position: 0 -11px}
+.flag.flag-ua {background-position: -16px -11px}
