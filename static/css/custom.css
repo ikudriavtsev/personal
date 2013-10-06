@@ -1,0 +1,8 @@
+.container {
+    border-top: 10px solid #ccc;
+    padding-top: 5px;
+}
+.divider {
+    border-top: 2px solid #ddd;
+    margin: 10px 0;
+}
