@@ -4,13 +4,33 @@
 		<title>404</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="description" lang="en" content="404" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/bootstrap.min.css") }}">
 	</head>
 	<body>
 		<div class="container jumbotron">
-			<h1>Oopsie, 404</h1>
-			<p>This site currently has only one page.</p>
-			<p><a href="/" class="btn btn-primary btn-lg" role="button">Take me there!</a></p>
+			<div class="row">
+				<div class="col-sm-6">
+					<h1>Oopsie, 404</h1>
+					<p>This site currently has only one page.</p>
+					<p><a href="/" class="btn btn-primary btn-lg" role="button">Take me there!</a></p>
+				</div>
+				<div class="col-sm-6">
+					<h3>I don't want you to be sad, so here is a nice kitten for you:</h3>
+					<img src="http://placekitten.com/g/200/250" class="img-thumbnail center-block">
+				</div>
+			</div>
 		</div>
+		<style type="text/css">
+			.container {
+				margin: auto;
+				position: absolute;
+				top: 0;
+				right: 0;
+				left: 0;
+				bottom: 0;
+				height: 400px;
+			}
+		</style>
 	</body>
 </html>
