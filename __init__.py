@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from linkedin import linkedin
+from linkedin.exceptions import BaseLinkedInError
 import os
 
 
@@ -18,9 +19,11 @@ def index():
         request.base_url,
         linkedin.PERMISSIONS.enums.values())
     application = linkedin.LinkedInApplication(authentication)
-    profile = application.get_profile()
-    print profile
-    return render_template('index.html')
+    try:
+        profile = application.get_profile()
+    except BaseLinkedInError:
+        profile = None
+    return render_template('index.html', profile=profile)
 
 
 @app.errorhandler(404)
