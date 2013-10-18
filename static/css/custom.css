@@ -3,8 +3,6 @@ html, body {
 }
 /* Wrapper for page content to push down footer */
 #wrap {
-    border-top: 15px solid #eee;
-    padding-top: 10px;
     min-height: 100%;
     height: auto !important;
     height: 100%;
@@ -12,13 +10,20 @@ html, body {
     margin: 0 auto -34px;
 }
 
+div.border {
+    height: 15px;
+    background-color: #eee;
+    margin-bottom: 10px;
+}
+
 /* Set the fixed height of the footer here */
 #push, #footer {
     height: 34px;
 }
-#footer {
+#footer>div{
     background-color: #eee;
-    padding: 4px 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .divider {

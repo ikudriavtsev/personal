@@ -10,6 +10,7 @@
 </head>
 <body>
 	<div id="wrap" class="container">
+		<div class="border"></div>
 		{% if profile %}
 			<div class="row">
 				<div class="col-md-4">
@@ -143,20 +144,21 @@
 			{% endif %}
 		</div>
 		<div id="footer" class="container">
-			<div class="row">
-				<div class="col-xs-6">
-					<a href="http://de.linkedin.com/in/iuriikudriavtsev/" class="pull-right">
-						<img src="{{ url_for('static', filename="img/linkedin.png") }}">
-					</a>
-				</div>
-				<div class="col-xs-6">
-					<a href="https://www.facebook.com/iurii.kudriavtsev/" class="pull-left">
-						<img src="{{ url_for('static', filename="img/facebook.png") }}">
-					</a>
+			<div>
+				<div class="row">
+					<div class="col-xs-6">
+						<a href="http://de.linkedin.com/in/iuriikudriavtsev/" class="pull-right">
+							<img src="{{ url_for('static', filename="img/linkedin.png") }}">
+						</a>
+					</div>
+					<div class="col-xs-6">
+						<a href="https://www.facebook.com/iurii.kudriavtsev/" class="pull-left">
+							<img src="{{ url_for('static', filename="img/facebook.png") }}">
+						</a>
+					</div>
 				</div>
 			</div>
 	</div>
 	<script type="text/javascript" src="{{ url_for('static', filename="js/jquery-2.0.3.min.js") }}"></script>
-	{# <script type="text/javascript" src="{{ url_for('static', filename="js/bootstrap.min.js") }}"></script> #}
 </body>
 </html>
