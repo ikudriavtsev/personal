@@ -4,10 +4,9 @@ import os
 
 
 app = Flask(__name__)
-app.debug = True
-
 if 'PERSONAL_APP_SETTINGS' in os.environ:
     app.config.from_envvar('PERSONAL_APP_SETTINGS')
+
 
 @app.route('/')
 def index():
@@ -22,6 +21,11 @@ def index():
     profile = application.get_profile()
     print profile
     return render_template('index.html')
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':
