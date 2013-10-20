@@ -22,7 +22,9 @@ def index():
     try:
         profile = application.get_profile()
     except BaseLinkedInError:
+    except BaseLinkedInError as e:
         profile = None
+        app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)
     return render_template('index.html', profile=profile)
 
 
