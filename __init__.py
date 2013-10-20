@@ -12,10 +12,10 @@ if 'PERSONAL_APP_SETTINGS' in os.environ:
 @app.route('/')
 def index():
     authentication = linkedin.LinkedInDeveloperAuthentication(
-        app.config['API_KEY'],
-        app.config['API_SECRET'],
-        app.config['USER_TOKEN'],
-        app.config['USER_SECRET'],
+        app.config['LINKEDIN_API_KEY'],
+        app.config['LINKEDIN_API_SECRET'],
+        app.config['LINKEDIN_USER_TOKEN'],
+        app.config['LINKEDIN_USER_SECRET'],
         request.base_url,
         linkedin.PERMISSIONS.enums.values())
     application = linkedin.LinkedInApplication(authentication)

@@ -137,7 +137,7 @@
 			{% else %}
 				<div class="jumbotron row">
 					<h1>Well, it was worth a try...</h1>
-					<p>Looks like something is wrong with <a href="www.linkedin.com">linkedin</a>. You can notify me that this happened by <a href="mailto:{{ profile['emailAddress'] }}">email</a> or by sending me a short message right now.</p>
+					<p>Looks like something is wrong with <a href="www.linkedin.com">linkedin</a>. You can notify me that this happened by <a href="mailto:{{ config['EMAIL'] }}">email</a> or by sending me a short message right now.</p>
 				</div>
 				<div class="row">
 					<div class="col-xs-offset-1 col-xs-10">
@@ -168,12 +168,13 @@
 			<div class="row">
 				<div class="row">
 					<div class="col-xs-6">
-						<a href="{{ profile['publicProfileUrl'] }}" class="pull-right">
+						{# since footer is shown even when linkedin API is not available, we cannot use API to get profile url #}
+						<a href="{{ config['LINKEDIN_PUBLIC_PROFILE_URL'] }}" class="pull-right">
 							<img src="{{ url_for('static', filename="img/linkedin.png") }}">
 						</a>
 					</div>
 					<div class="col-xs-6">
-						<a href="https://www.facebook.com/iurii.kudriavtsev/" class="pull-left">
+						<a href="{{ config['FACEBOOK_PROFILE_URL'] }}" class="pull-left">
 							<img src="{{ url_for('static', filename="img/facebook.png") }}">
 						</a>
 					</div>
