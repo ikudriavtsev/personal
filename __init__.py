@@ -20,8 +20,25 @@ def index():
         linkedin.PERMISSIONS.enums.values())
     application = linkedin.LinkedInApplication(authentication)
     try:
-        profile = application.get_profile()
-    except BaseLinkedInError:
+        profile = application.get_profile(selectors=[
+            'id',
+            # general info
+            'first-name',
+            'last-name',
+            'headline',
+            'summary',
+            # contact info
+            'email-address',
+            'member-url-resources',
+            'phone-numbers',
+            'public-profile-url',
+            # profile picture
+            'picture-url',
+            'picture-urls',
+            'location',
+            'skills',
+            'educations',
+        ])
     except BaseLinkedInError as e:
         profile = None
         app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)

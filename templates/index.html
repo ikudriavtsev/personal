@@ -14,11 +14,10 @@
 		{% if profile %}
 			<div class="row">
 				<div class="col-md-4">
-					<h1>Iurii Kudriavtsev</h1>
-					<h4 class="text-muted">Web Developer</h4>
+					<h1>{{ profile['firstName'] }} {{ profile['lastName'] }}</h1>
+					<h4 class="text-muted">{{ profile['headline'] }}</h4>
 					<div class="divider"></div>
-					<p>I like creating web apps, mostly using python. Always tend to learn something new, have an ability for self development.</p>
-					<p>I think I am a good programmer already, but my goal is to become an expert in IT, such as - to make technology and development process decisions, to solve the problems at the edge of the different techologies contacts.</p>
+					<p>{{ profile['summary'] }}</p>
 				</div>
 				<div class="col-xs-6 col-md-4 col-md-offset-1">
 					<div class="page-header">
@@ -27,7 +26,7 @@
 								<h4>Phone:</h4>
 							</div>
 							<div class="col-sm-7">
-								<h6 class="text-muted pull-right">+4917699645062</h6>
+								<h6 class="text-muted pull-right">{{ profile['phoneNumbers']['values'][0]['phoneNumber'] }}</h6>
 							</div>
 						</div>
 					</div>
@@ -37,7 +36,7 @@
 								<h4>Email:</h4>
 							</div>
 							<div class="col-sm-7">
-								<h6 class="text-muted pull-right"><a href="mailto:iurii.kudriavtsev@gmail.com">iurii.kudriavtsev@gmail.com</a>
+								<h6 class="text-muted pull-right"><a href="mailto:{{ profile['emailAddress'] }}">{{ profile['emailAddress'] }}</a>
 								</h6>
 							</div>
 						</div>
@@ -45,16 +44,16 @@
 					<div class="page-header">
 						<div class="row">
 							<div class="col-sm-5">
-								<h4>Website:</h4>
+								<h4>Website</h4>
 							</div>
 							<div class="col-sm-7">
-								<h6 class="text-muted pull-right"><a href="/">iuriikudriavtsev.com</a></h6>
+								<h6 class="text-muted pull-right"><a href="/">{{ profile['memberUrlResources']['values'][0]['url'] }}</a></h6>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-4 col-md-2 pull-right">
-					<img src="http://placekitten.com/g/200/300" class="img-thumbnail">
+				<div class="col-xs-4 col-md-2 pull-right">{{ profile['pictureUrls'] }}
+					<img src="{{ profile['pictureUrl'] }}" class="img-thumbnail">
 				</div>
 			</div>
 			<div class="row divider"></div>
@@ -138,7 +137,7 @@
 			{% else %}
 				<div class="jumbotron row">
 					<h1>Well, it was worth a try...</h1>
-					<p>Looks like something is wrong with <a href="www.linkedin.com">linkedin</a>. You can notify me that this happened by <a href="mailto:iurii.kudriavtsev@gmail.com">email</a> or by sending me a short message right now.</p>
+					<p>Looks like something is wrong with <a href="www.linkedin.com">linkedin</a>. You can notify me that this happened by <a href="mailto:{{ profile['emailAddress'] }}">email</a> or by sending me a short message right now.</p>
 				</div>
 				<div class="row">
 					<div class="col-xs-offset-1 col-xs-10">
@@ -169,7 +168,7 @@
 			<div class="row">
 				<div class="row">
 					<div class="col-xs-6">
-						<a href="http://de.linkedin.com/in/iuriikudriavtsev/" class="pull-right">
+						<a href="{{ profile['publicProfileUrl'] }}" class="pull-right">
 							<img src="{{ url_for('static', filename="img/linkedin.png") }}">
 						</a>
 					</div>
