@@ -30,3 +30,11 @@ div.border {
     border-top: 2px solid #eee;
     margin: 10px 0;
 }
+
+.about {
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: #eee;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
