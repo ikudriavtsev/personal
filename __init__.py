@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
+from flask_wtf.csrf import CsrfProtect
+from forms import ShortMessageForm
 from linkedin import linkedin
 from linkedin.exceptions import BaseLinkedInError
 import os
 
 
 app = Flask(__name__)
+CsrfProtect(app)
 if 'PERSONAL_APP_SETTINGS' in os.environ:
     app.config.from_envvar('PERSONAL_APP_SETTINGS')
 
@@ -42,7 +45,8 @@ def index():
     except BaseLinkedInError as e:
         profile = None
         app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)
-    return render_template('index.html', profile=profile)
+    form = ShortMessageForm()
+    return render_template('index.html', profile=profile, form=form)
 
 
 @app.errorhandler(404)
