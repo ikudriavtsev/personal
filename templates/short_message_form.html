@@ -1,17 +1,17 @@
 <form class="form-horizontal short-message" role="form">
 	{{ form.hidden_tag() }}
-	{% for field in form %}
-		<div class="form-group">
-			<div class="col-sm-5">
-				{% if field.type == 'TextAreaField' %}
-					{{ field(placeholder=field.label.text, class="form-control", rows=3) }}
-				{% else %}
-					{{ field(placeholder=field.label.text, class="form-control") }}
-				{% endif %}
-				<small class="help-block">{{ field.description }}</small>
-			</div>
+	<div class="form-group">
+		<div class="col-sm-5">
+				{{ form.email(placeholder=form.email.label.text, class="form-control") }}
+			<small class="help-block">{{ form.email.description }}</small>
 		</div>
-	{% endfor %}
+	</div>
+	<div class="form-group">
+		<div class="col-sm-5">
+				{{ form.message(placeholder=form.message.label.text, class="form-control", rows=3) }}
+			<small class="help-block">{{ form.message.description }}</small>
+		</div>
+	</div>
 	<div class="form-group">
 		<div class="col-sm-2">
 			<button type="submit" class="btn btn-primary" data-loading-text="Sending...">Send</button>
