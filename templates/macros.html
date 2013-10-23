@@ -1,5 +1,5 @@
 {% macro render_short_message_form(form) %}
-	<form class="form-horizontal" role="form">
+	<form class="form-horizontal short-message" role="form">
 		{{ form.hidden_tag() }}
 		{% for field in form %}
 			<div class="form-group">
@@ -15,7 +15,7 @@
 		{% endfor %}
 		<div class="form-group">
 			<div class="col-sm-2">
-				<button type="submit" class="btn btn-primary">Send</button>
+				<button type="submit" class="btn btn-primary" data-loading-text="Sending...">Send</button>
 			</div>
 		</div>
 	</form>
