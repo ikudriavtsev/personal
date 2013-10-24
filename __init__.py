@@ -50,6 +50,13 @@ def index():
     return render_template('index.html', profile=profile, form=form)
 
 
+@app.route('/send_message', methods=['POST'])
+def message():
+    form = ShortMessageForm()
+    form.validate()
+    return render_template('short_message_form.html', form=form)
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404

@@ -170,9 +170,13 @@
 	<script type="text/javascript" src="{{ url_for('static', filename="js/bootstrap.min.js") }}"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		$('form.short-message').on('submit', function(e){
+		$(document).on('submit', 'form.short-message', function(e){
 			e.preventDefault();
-			$(this).find('button').button('loading');
+			var $this = $(this);
+			$this.find('button').button('loading');
+			$.post("{{ url_for('message') }}", $this.serialize(), function(data){
+				$this.replaceWith(data);
+			});
 		});
 	});
 	</script>
