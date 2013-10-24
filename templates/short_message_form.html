@@ -1,19 +1,25 @@
-<form class="form-horizontal short-message" role="form">
+<form class="form-horizontal short-message" role="form" action="{{ url_for('message') }}" method="POST">
 	{{ form.hidden_tag() }}
-	<div class="form-group">
-		<div class="col-sm-5">
-				{{ form.email(placeholder=form.email.label.text, class="form-control") }}
-			<small class="help-block">{{ form.email.description }}</small>
+	<div class="form-group {% if form.email.errors %}has-error{% endif %}">
+		<label for="{{ form.email.id }}" class="col-lg-2 control-label">{{ form.email.label.text }}</label>
+		<div class="col-lg-10">
+			{{ form.email(placeholder=form.email.description, class="form-control") }}
+			{% for error in form.email.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %}
+		</div>
+	</div>
+	<div class="form-group {% if form.email.errors %}has-error{% endif %}">
+		<label for="{{ form.message.id }}" class="col-lg-2 control-label">{{ form.message.label.text }}</label>
+		<div class="col-lg-10">
+			{{ form.message(placeholder=form.message.description, class="form-control", rows=3) }}
+			{% for error in form.message.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %}
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-5">
-				{{ form.message(placeholder=form.message.label.text, class="form-control", rows=3) }}
-			<small class="help-block">{{ form.message.description }}</small>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-2">
+		<div class="col-lg-offset-2 col-lg-10">
 			<button type="submit" class="btn btn-primary" data-loading-text="Sending...">Send</button>
 		</div>
 	</div>
