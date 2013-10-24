@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 from flask_wtf.csrf import CsrfProtect
+from flask_mail import Mail, Message
+from wtforms.widgets import HTMLString
 from forms import ShortMessageForm
 from linkedin import linkedin
 from linkedin.exceptions import BaseLinkedInError
@@ -7,9 +9,13 @@ import os
 
 
 app = Flask(__name__)
-CsrfProtect(app)
+
 if 'PERSONAL_APP_SETTINGS' in os.environ:
     app.config.from_envvar('PERSONAL_APP_SETTINGS')
+
+CsrfProtect().init_app(app)
+mail = Mail()
+mail.init_app(app)
 
 
 @app.route('/')
@@ -53,8 +59,13 @@ def index():
 @app.route('/send_message', methods=['POST'])
 def message():
     form = ShortMessageForm()
-    form.validate()
-    return render_template('short_message_form.html', form=form)
+    if not form.validate():
+        return render_template('short_message_form.html', form=form)
+    # send an email if the form is valid
+    msg = Message("I've just sent you a message from your personal site", sender=form.email.data, recipients=[app.config['EMAIL']])
+    msg.body = form.message.data
+    mail.send(msg)
+    return HTMLString("<div class='alert alert-success'>Thank you for the feedback. I will try to reply as soon as possible.</div>")
 
 
 @app.errorhandler(404)
