@@ -1,3 +1,4 @@
 Flask
-python-linkedin
 Flask-WTF
+Flask-Mail
+python-linkedin
