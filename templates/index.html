@@ -168,15 +168,31 @@
 	</div>
 	<script type="text/javascript" src="{{ url_for('static', filename="js/jquery-2.0.3.min.js") }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename="js/bootstrap.min.js") }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename="js/charCount.js") }}"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
+		// ajax submit
 		$(document).on('submit', 'form.short-message', function(e){
 			e.preventDefault();
 			var $this = $(this);
 			$this.find('button').button('loading');
 			$.post("{{ url_for('message') }}", $this.serialize(), function(data){
 				$this.replaceWith(data);
+				// characters counter
+				$('form.short-message textarea').charCount({
+					allowed: 300,
+					css: 'label label-default',
+					cssWarning: 'label-warning',
+					cssExceeded: 'label-danger'
+				});
 			});
+		});
+		// characters counter
+		$('form.short-message textarea').charCount({
+			allowed: 300,
+			css: 'label label-default',
+			cssWarning: 'label-warning',
+			cssExceeded: 'label-danger'
 		});
 	});
 	</script>

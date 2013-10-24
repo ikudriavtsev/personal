@@ -9,7 +9,7 @@
 			{% endfor %}
 		</div>
 	</div>
-	<div class="form-group {% if form.email.errors %}has-error{% endif %}">
+	<div class="form-group {% if form.message.errors %}has-error{% endif %}">
 		<label for="{{ form.message.id }}" class="col-lg-2 control-label">{{ form.message.label.text }}</label>
 		<div class="col-lg-10">
 			{{ form.message(placeholder=form.message.description, class="form-control", rows=3) }}
