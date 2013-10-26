@@ -45,6 +45,7 @@ def index():
             'picture-url',
             'picture-urls',
             'location',
+            'positions',
             'skills',
             'educations',
         ])
