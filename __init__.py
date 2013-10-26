@@ -52,7 +52,6 @@ def index():
         profile = None
         app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)
     form = ShortMessageForm()
-    profile = None
     return render_template('index.html', profile=profile, form=form)
 
 
@@ -74,4 +73,4 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host=app.config['HOST'])
