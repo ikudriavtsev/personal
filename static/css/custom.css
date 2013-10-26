@@ -7,7 +7,7 @@ html, body {
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    margin: 0 auto -34px;
+    margin: 0 auto -123px;
 }
 
 div.border {
@@ -18,7 +18,7 @@ div.border {
 
 /* Set the fixed height of the footer here */
 #push, #footer {
-    height: 34px;
+    height: 123px;
 }
 #footer>div{
     background-color: #eee;
