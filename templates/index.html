@@ -133,6 +133,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="divider"></div>
+			<div class="row">
+				<div class="col-md-6">
+					<h3>Want to get in touch with me?</h3>
+					<p>Feel free to send me an <a href="mailto:{{ config['EMAIL'] }}">email</a> or leave a short message right now.</p>
+					<br>
+					{% include "short_message_form.html" %}
+					<br>
+				</div>
+			</div>
 			{% else %}
 				<div class="jumbotron row">
 					<h1>Well, it was worth a try...</h1>
