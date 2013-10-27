@@ -38,17 +38,16 @@ def index():
             'summary',
             # contact info
             'email-address',
-            'member-url-resources',
             'phone-numbers',
             'public-profile-url',
-            # profile picture
-            'picture-url',
-            'picture-urls',
+            # profile
             'location',
             'positions',
             'skills',
             'educations',
         ])
+        # profile picture
+        profile['pictureUrls'] = application.get_picture_urls()
     except BaseLinkedInError as e:
         profile = None
         app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)

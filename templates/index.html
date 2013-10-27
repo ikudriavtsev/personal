@@ -44,16 +44,16 @@
 					<div class="page-header">
 						<div class="row">
 							<div class="col-sm-5">
-								<h4>Website</h4>
+								<h4>Location:</h4>
 							</div>
 							<div class="col-sm-7">
-								<h6 class="text-muted pull-right"><a href="/">{{ profile['memberUrlResources']['values'][0]['url'] }}</a></h6>
+								<h6 class="text-muted pull-right">{{ profile['location']['name'] }}</h6>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-4 col-md-2 pull-right">{{ profile['pictureUrls'] }}
-					<img src="{{ profile['pictureUrl'] }}" class="img-thumbnail">
+				<div class="col-xs-4 col-md-2 pull-right">
+					<img src="{{ profile['pictureUrls']['values'][0] }}" class="img-thumbnail">
 				</div>
 			</div>
 			<div class="row divider"></div>

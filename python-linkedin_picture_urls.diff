@@ -1,0 +1,38 @@
+diff --git a/linkedin/linkedin.py b/linkedin/linkedin.py
+index a44208c..925a550 100644
+--- a/linkedin/linkedin.py
++++ b/linkedin/linkedin.py
+@@ -195,7 +195,7 @@ def get_profile(self, member_id=None, member_url=None, selectors=None,
+             if not self.request_succeeded(response):
+                 raise LinkedInError(response)
+             return response
+-
++
+     def search_profile(self, selectors=None, params=None, headers=None):
+         if selectors:
+             url = '%s:(%s)' % (ENDPOINTS.PEOPLE_SEARCH,
+@@ -212,6 +212,24 @@ def search_profile(self, selectors=None, params=None, headers=None):
+                 raise LinkedInError(response)
+             return response
+
++    def get_picture_urls(self, member_id=None, member_url=None,
++                    params=None, headers=None):
++        if member_id:
++                url = '%s/id=%s/picture-urls::(original)' % (ENDPOINTS.PEOPLE, str(member_id))
++        elif member_url:
++            url = '%s/url=%s/picture-urls::(original)' % (ENDPOINTS.PEOPLE, urllib.quote_plus(member_url))
++        else:
++            url = '%s/~/picture-urls::(original)' % ENDPOINTS.PEOPLE
++        try:
++            response = self.make_request('GET', url, params=params, headers=headers)
++            response = response.json()
++        except requests.ConnectionError as error:
++            raise LinkedInHTTPError(error.message)
++        else:
++            if not self.request_succeeded(response):
++                raise LinkedInError(response)
++            return response
++
+     def get_connections(self, member_id=None, member_url=None, selectors=None,
+                         params=None, headers=None):
+         if member_id:
