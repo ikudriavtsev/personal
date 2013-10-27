@@ -57,14 +57,16 @@ def index():
 
 @app.route('/send_message', methods=['POST'])
 def message():
-    form = ShortMessageForm()
-    if not form.validate():
-        return render_template('short_message_form.html', form=form)
-    # send an email if the form is valid
-    msg = Message("I've just sent you a message from your personal site", sender=form.email.data, recipients=[app.config['EMAIL']])
-    msg.body = form.message.data
-    mail.send(msg)
-    return HTMLString("<div class='alert alert-success'>Thank you for the feedback. I will try to reply as soon as possible.</div>")
+    if request.is_xhr:
+        form = ShortMessageForm()
+        if not form.validate():
+            return render_template('short_message_form.html', form=form)
+        # send an email if the form is valid
+        msg = Message("I've just sent you a message from your personal site", sender=form.email.data, recipients=[app.config['EMAIL']])
+        msg.body = form.message.data
+        mail.send(msg)
+        return HTMLString("<div class='alert alert-success'>Thank you for the feedback. I will try to reply as soon as possible.</div>")
+    return render_template('404.html'), 404
 
 
 @app.errorhandler(404)
