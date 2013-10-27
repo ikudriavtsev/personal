@@ -10,20 +10,10 @@ html, body {
     margin: 0 auto -123px;
 }
 
-div.border {
+.border {
     height: 15px;
     background-color: #eee;
     margin-bottom: 10px;
-}
-
-/* Set the fixed height of the footer here */
-#push, #footer {
-    height: 123px;
-}
-#footer>div{
-    background-color: #eee;
-    padding-top: 4px;
-    padding-bottom: 4px;
 }
 
 .divider {
@@ -38,3 +28,18 @@ div.border {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.get-pdf {
+    margin: 15px 0;
+}
+
+/* Set the fixed height of the footer here */
+#push, #footer {
+    height: 123px;
+}
+#footer>div{
+    background-color: #eee;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
