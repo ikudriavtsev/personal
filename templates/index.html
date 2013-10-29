@@ -55,7 +55,7 @@
 				</div>
 				<div class="col-xs-4 col-md-2 pull-right">
 					<img src="{{ profile['pictureUrls']['values'][0] }}" class="img-thumbnail img-responsive">
-					<a href="#" id="get-pdf" class="btn btn-primary btn-sm get-pdf" data-loading-text="Composing PDF file...">Download PDF</a>
+					<a href="{{ url_for('pdf') }}" id="get-pdf" class="btn btn-primary btn-sm get-pdf" data-loading-text="Download started...">Download PDF</a>
 				</div>
 			</div>
 			<div class="row divider"></div>
@@ -149,13 +149,13 @@
 	<script type="text/javascript" src="{{ url_for('static', filename="js/bootstrap.min.js") }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename="js/charCount.js") }}"></script>
 	<script type="text/javascript">
-	$(document).ready(function(){
+	$(document).ready(function() {
 		// ajax submit of the short message form
-		$(document).on('submit', 'form.short-message', function(e){
+		$(document).on('submit', 'form.short-message', function(e) {
 			e.preventDefault();
 			var $this = $(this);
 			$this.find('button').button('loading');
-			$.post("{{ url_for('message') }}", $this.serialize(), function(data){
+			$.post("{{ url_for('message') }}", $this.serialize(), function(data) {
 				$this.replaceWith(data);
 				// re-init characters counter
 				$('form.short-message textarea').charCount({
@@ -176,8 +176,7 @@
 		});
 
 		// get PDF button
-		$('#get-pdf').click(function(e){
-			e.preventDefault()
+		$('#get-pdf').click(function(e) {
 			$(this).button('loading');
 		});
 	});

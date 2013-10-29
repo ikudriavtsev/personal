@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response, abort
 from flask_wtf.csrf import CsrfProtect
 from flask_mail import Mail, Message
 from wtforms.widgets import HTMLString
 from forms import ShortMessageForm
+from utils import compose_pdf
 from linkedin import linkedin
 from linkedin.exceptions import BaseLinkedInError
 import os
@@ -66,7 +67,16 @@ def message():
         msg.body = form.message.data
         mail.send(msg)
         return HTMLString("<div class='alert alert-success'>Thank you for the feedback. I will try to reply as soon as possible.</div>")
-    return render_template('404.html'), 404
+    abort(404)
+
+
+@app.route('/get_pdf')
+def pdf():
+    pdf = compose_pdf()
+    response = make_response(pdf)
+    response.headers['Content-Disposition'] = "attachment; filename='test.pdf'"
+    response.mimetype = 'application/pdf'
+    return response
 
 
 @app.errorhandler(404)

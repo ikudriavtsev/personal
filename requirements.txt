@@ -2,3 +2,4 @@ Flask
 Flask-WTF
 Flask-Mail
 python-linkedin
+reportlab
