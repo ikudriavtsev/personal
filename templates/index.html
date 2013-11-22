@@ -22,14 +22,16 @@
 				</div>
 				<div class="col-xs-6 col-md-4 col-md-offset-1">
 					<div class="page-header">
-						<div class="row">
-							<div class="col-sm-5">
-								<h4>Phone:</h4>
+						{% if profile['phoneNumbers']['_total'] %}
+							<div class="row">
+								<div class="col-sm-5">
+									<h4>Phone:</h4>
+								</div>
+								<div class="col-sm-7">
+									<h6 class="text-muted pull-right">{{ profile['phoneNumbers']['values'][0]['phoneNumber'] }}</h6>
+								</div>
 							</div>
-							<div class="col-sm-7">
-								<h6 class="text-muted pull-right">{{ profile['phoneNumbers']['values'][0]['phoneNumber'] }}</h6>
-							</div>
-						</div>
+						{% endif %}
 					</div>
 					<div class="page-header">
 						<div class="row">
@@ -60,46 +62,52 @@
 			</div>
 			<div class="row divider"></div>
 			<div class="row">
-				<div class="col-md-6">
-					<h3>Work Experience</h3>
-					{% for position in profile['positions']['values'] %}
-						<div class="page-header">
-							<h5>{{ position['title'] }} - {{ position['company']['name'] }} | <small>{{ position['startDate']['month'] }}/{{ position['startDate']['year'] }} - {% if not position['isCurrent'] %}{{ position['endDate']['month'] }}/{{ position['endDate']['year'] }}{% else %}present{% endif %}</small></h5>
-						</div>
-						<p>{{ position['summary'].replace('\n', '<br>')|safe }}</p>
-					{% endfor %}
-				</div>
-				<div class="col-md-6">
-					<div class="row">
-						<div class="col-xs-12">
-							<h3>Education</h3>
-							{% for education in profile['educations']['values'] %}
-								<div class="page-header">
-									<h5>{{ education['schoolName'] }} | <small>{{ education['startDate']['year'] }} - {{ education['endDate']['year'] }}</small></h5>
-									<h5>{{ education['degree'] }}, {{ education['fieldOfStudy'] }}</h5>
-								</div>
-								<ul>
-									{% for note in education['notes'].split('\n') %}
-										<li>{{ note }}</li>
-									{% endfor %}
-								</ul>
-							{% endfor %}
-						</div>
+				{% if profile['positions']['_total'] %}
+					<div class="col-md-6">
+						<h3>Work Experience</h3>
+						{% for position in profile['positions']['values'] %}
+							<div class="page-header">
+								<h5>{{ position['title'] }} - {{ position['company']['name'] }} | <small>{{ position['startDate']['month'] }}/{{ position['startDate']['year'] }} - {% if not position['isCurrent'] %}{{ position['endDate']['month'] }}/{{ position['endDate']['year'] }}{% else %}present{% endif %}</small></h5>
+							</div>
+							<p>{{ position['summary'].replace('\n', '<br>')|safe }}</p>
+						{% endfor %}
 					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<h3>Skills</h3>
-							<div class="row">
-								{% for column in profile['skills']['values']|slice(3) %}
-									<div class="col-xs-4">
-										{% for skill in column %}
-											<h4><span class="label label-default">{{ skill['skill']['name'] }}</span></h4>
-										{% endfor %}
+				{% endif %}
+				<div class="col-md-6">
+					{% if profile['educations']['_total'] %}
+						<div class="row">
+							<div class="col-xs-12">
+								<h3>Education</h3>
+								{% for education in profile['educations']['values'] %}
+									<div class="page-header">
+										<h5>{{ education['schoolName'] }} | <small>{{ education['startDate']['year'] }} - {{ education['endDate']['year'] }}</small></h5>
+										<h5>{{ education['degree'] }}, {{ education['fieldOfStudy'] }}</h5>
 									</div>
+									<ul>
+										{% for note in education['notes'].split('\n') %}
+											<li>{{ note }}</li>
+										{% endfor %}
+									</ul>
 								{% endfor %}
 							</div>
 						</div>
-					</div>
+					{% endif %}
+					{% if profile['skills']['_total'] %}
+						<div class="row">
+							<div class="col-xs-12">
+								<h3>Skills</h3>
+								<div class="row">
+									{% for column in profile['skills']['values']|slice(3) %}
+										<div class="col-xs-4">
+											{% for skill in column %}
+												<h4><span class="label label-default">{{ skill['skill']['name'] }}</span></h4>
+											{% endfor %}
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					{% endif %}
 				</div>
 			</div>
 			<div class="divider"></div>
