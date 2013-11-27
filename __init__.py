@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, make_response, abort, g
+from flask import Flask, flash, redirect, render_template, request, make_response, abort, g, url_for
 from flask_wtf.csrf import CsrfProtect
 from flask_mail import Mail, Message
 from wtforms.widgets import HTMLString
 from werkzeug.local import LocalProxy
+from werkzeug.contrib.cache import FileSystemCache
 from forms import ShortMessageForm
 from utils import compose_pdf
 from linkedin import linkedin
@@ -18,43 +19,47 @@ if 'PERSONAL_APP_SETTINGS' in os.environ:
 CsrfProtect().init_app(app)
 mail = Mail()
 mail.init_app(app)
+cache = FileSystemCache(app.config["CACHE_DIR"])
 
 
 def get_profile():
-    profile = getattr(g, '_profile', None)
+    profile = cache.get('profile')
     if profile is None:
-        authentication = linkedin.LinkedInDeveloperAuthentication(
-            app.config['LINKEDIN_API_KEY'],
-            app.config['LINKEDIN_API_SECRET'],
-            app.config['LINKEDIN_USER_TOKEN'],
-            app.config['LINKEDIN_USER_SECRET'],
-            request.base_url,
-            linkedin.PERMISSIONS.enums.values())
-        application = linkedin.LinkedInApplication(authentication)
-        try:
-            profile = application.get_profile(selectors=[
-                'id',
-                # general info
-                'first-name',
-                'last-name',
-                'headline',
-                'summary',
-                # contact info
-                'email-address',
-                'phone-numbers',
-                'public-profile-url',
-                # profile
-                'location',
-                'positions',
-                'skills',
-                'educations',
-            ])
-            # profile picture
-            profile['pictureUrls'] = application.get_picture_urls()
-        except BaseLinkedInError as e:
-            profile = []
-            app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)
-        g._profile = profile
+        profile = getattr(g, '_profile', None)
+        if profile is None:
+            authentication = linkedin.LinkedInDeveloperAuthentication(
+                app.config['LINKEDIN_API_KEY'],
+                app.config['LINKEDIN_API_SECRET'],
+                app.config['LINKEDIN_USER_TOKEN'],
+                app.config['LINKEDIN_USER_SECRET'],
+                request.base_url,
+                linkedin.PERMISSIONS.enums.values())
+            application = linkedin.LinkedInApplication(authentication)
+            try:
+                profile = application.get_profile(selectors=[
+                    'id',
+                    # general info
+                    'first-name',
+                    'last-name',
+                    'headline',
+                    'summary',
+                    # contact info
+                    'email-address',
+                    'phone-numbers',
+                    'public-profile-url',
+                    # profile
+                    'location',
+                    'positions',
+                    'skills',
+                    'educations',
+                ])
+                # profile picture
+                profile['pictureUrls'] = application.get_picture_urls()
+            except BaseLinkedInError as e:
+                profile = []
+                app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)
+            g._profile = profile
+        cache.set('profile', profile, timeout=30*24*60*60) # 30 days timeout
     return profile
 
 profile = LocalProxy(get_profile)
@@ -87,6 +92,13 @@ def pdf():
     response.headers['Content-Disposition'] = "attachment; filename='%s %s.pdf'" % (profile['firstName'], profile['lastName'])
     response.mimetype = 'application/pdf'
     return response
+
+
+@app.route('/clear_cache')
+def clear_cache():
+    cache.clear()
+    flash("Cache cleared")
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(404)

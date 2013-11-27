@@ -12,6 +12,7 @@
 <body>
 	<div id="wrap" class="container">
 		<div class="row border"></div>
+		{% include "flash_messages.html" %}
 		{% if profile %}
 			<div class="row">
 				<div class="col-md-4">
@@ -158,6 +159,8 @@
 	<script type="text/javascript" src="{{ url_for('static', filename="js/charCount.js") }}"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		// dismissable alerts
+		$(".alert").alert();
 		// ajax submit of the short message form
 		$(document).on('submit', 'form.short-message', function(e) {
 			e.preventDefault();
