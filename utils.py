@@ -156,6 +156,18 @@ def compose_pdf(profile):
         story.append(Paragraph('Skills', styles["Headline"]))
     p = '  '.join([skill['skill']['name'].upper() for skill in profile['skills']['values']])
     story.append(Paragraph(p, styles["Skill"]))
+    if profile['recommendationsReceived']['_total']:
+        story.append(Paragraph('Recommendations', styles["Headline"]))
+    for recommendation in profile['recommendationsReceived']['values']:
+        recommendation_headline = '%s %s <font color="%s">|</font> <font size=8>%s</font>' % (
+            recommendation['recommender']['firstName'],
+            recommendation['recommender']['lastName'],
+            COLOR,
+            recommendation['recommendationType']['code'],
+        )
+        recommendation_text = recommendation['recommendationText'].replace('\n', '<br/>')
+        story.append(Paragraph(recommendation_headline, styles["CustomBullet"], bulletText='\xe2\x80\xa2'))
+        story.append(Paragraph(recommendation_text, styles["Indent"]))
 
     def onPage(canvas, dcmt):
         canvas.saveState()
