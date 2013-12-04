@@ -109,6 +109,19 @@
 							</div>
 						</div>
 					{% endif %}
+					{% if profile['recommendationsReceived']['_total'] %}
+						<div class="row">
+							<div class="col-xs-12">
+								<h3>Recommendations</h3>
+								{% for recommendation in profile['recommendationsReceived']['values'] %}
+									<div class="page-header">
+										<h5>{{ recommendation['recommender']['firstName'] }} {{ recommendation['recommender']['lastName'] }} | <small>{{ recommendation['recommendationType']['code'] }}</small></h5>
+									</div>
+									<p>{{ recommendation['recommendationText'].replace('\n', '<br>')|safe }}</p>
+								{% endfor %}
+							</div>
+						</div>
+					{% endif %}
 				</div>
 			</div>
 			<div class="divider"></div>
