@@ -79,7 +79,9 @@ def message():
         if not form.validate():
             return render_template('short_message_form.html', form=form)
         # send an email if the form is valid
-        msg = Message("I've just sent you a message from your personal site", sender=form.email.data, recipients=[app.config['EMAIL']])
+        msg = Message("I've just sent you a message from your personal site",
+            recipients=[app.config['EMAIL']],
+            reply_to=form.email.data)
         msg.body = form.message.data
         mail.send(msg)
         return HTMLString("<div class='alert alert-success'>Thank you for the feedback. I will try to reply as soon as possible.</div>")
