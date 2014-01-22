@@ -1,7 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, make_response, abort, g, url_for
 from flask_wtf.csrf import CsrfProtect
 from flask_mail import Mail, Message
-from wtforms.widgets import HTMLString
 from werkzeug.local import LocalProxy
 from werkzeug.contrib.cache import FileSystemCache
 from forms import ShortMessageForm
@@ -84,7 +83,7 @@ def message():
             reply_to=form.email.data)
         msg.body = form.message.data
         mail.send(msg)
-        return HTMLString("<div class='alert alert-success'>Thank you for the feedback. I will try to reply as soon as possible.</div>")
+        return "<div class='alert alert-success'>Thank you for the feedback. I will try to reply as soon as possible.</div>"
     abort(404)
 
 
