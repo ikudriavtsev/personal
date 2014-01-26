@@ -1,0 +1,31 @@
+DEBUG = True
+
+# general settings
+HOST = "127.0.0.1"
+# these settings are needed in case
+# linkedin profile is not accessible
+EMAIL = "my.email@example.com"
+GITHUB_PROFILE_URL = "https://github.com/"
+LINKEDIN_PUBLIC_PROFILE_URL = "http://linkedin.com/"
+SECRET_KEY = "<generate_me>"
+# using simple file system based caching
+# to not to query to linkedin on every request
+CACHE_DIR = "/tmp/cache/"
+
+# linkedin app
+LINKEDIN_API_KEY = ""
+LINKEDIN_API_SECRET = ""
+LINKEDIN_USER_TOKEN = ""
+LINKEDIN_USER_SECRET = ""
+
+# email account
+# the messages, sent by user from the site
+# will be sent using this email account
+MAIL_SERVER = "smtp.example.com"
+MAIL_USERNAME = "my.email"
+MAIL_PASSWORD = "my_password"
+# some email services (like gmail) doesn't allow
+# to use their addresses in the email `Sender` field
+# thus we put this account there
+# instead, we set `Reply-to` message header with the user's email
+MAIL_DEFAULT_SENDER = "my.email@example.com"
