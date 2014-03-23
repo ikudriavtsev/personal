@@ -22,7 +22,7 @@ def get_profile():
     profile = cache.get('profile')
     if profile is None:
         profile = getattr(g, '_profile', None)
-        if profile is None:
+        if not profile:
             authentication = linkedin.LinkedInDeveloperAuthentication(
                 app.config['LINKEDIN_API_KEY'],
                 app.config['LINKEDIN_API_SECRET'],
@@ -52,11 +52,11 @@ def get_profile():
                 ])
                 # profile picture
                 profile['pictureUrls'] = application.get_picture_urls()
+                cache.set('profile', profile, timeout=30*24*60*60) # 30 days timeout
             except BaseLinkedInError as e:
                 profile = []
                 app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)
             g._profile = profile
-        cache.set('profile', profile, timeout=30*24*60*60) # 30 days timeout
     return profile
 
 profile = LocalProxy(get_profile)
