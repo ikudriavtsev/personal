@@ -7,13 +7,10 @@ from forms import ShortMessageForm
 from utils import compose_pdf
 from linkedin import linkedin
 from linkedin.exceptions import BaseLinkedInError
-import os
 
 
 app = Flask(__name__)
-
-if 'PERSONAL_APP_SETTINGS' in os.environ:
-    app.config.from_envvar('PERSONAL_APP_SETTINGS')
+app.config.from_envvar('PERSONAL_APP_SETTINGS', silent=True)
 
 CsrfProtect().init_app(app)
 mail = Mail()
