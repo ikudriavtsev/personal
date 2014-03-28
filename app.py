@@ -88,7 +88,7 @@ def message():
 def pdf():
     pdf = compose_pdf(profile)
     response = make_response(pdf)
-    response.headers['Content-Disposition'] = "attachment; filename='%s %s.pdf'" % (profile['firstName'], profile['lastName'])
+    response.headers['Content-Disposition'] = 'attachment; filename="%s %s.pdf"' % (profile['firstName'], profile['lastName'])
     response.mimetype = 'application/pdf'
     return response
 
