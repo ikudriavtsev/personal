@@ -6,7 +6,7 @@ from werkzeug.contrib.cache import FileSystemCache
 from forms import ShortMessageForm
 from utils import compose_pdf
 from linkedin import linkedin
-from linkedin.exceptions import BaseLinkedInError
+from linkedin.exceptions import LinkedInError
 
 
 app = Flask(__name__)
@@ -53,7 +53,7 @@ def get_profile():
                 # profile picture
                 profile['pictureUrls'] = application.get_picture_urls()
                 cache.set('profile', profile, timeout=30*24*60*60) # 30 days timeout
-            except BaseLinkedInError as e:
+            except LinkedInError as e:
                 profile = []
                 app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)
             g._profile = profile
