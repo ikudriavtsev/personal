@@ -1,3 +1,4 @@
+import os
 from flask import Flask, flash, redirect, render_template, request, make_response, abort, g, url_for
 from flask_wtf.csrf import CsrfProtect
 from flask_mail import Mail, Message
@@ -10,7 +11,27 @@ from linkedin.exceptions import LinkedInError
 
 
 app = Flask(__name__)
-app.config.from_envvar('PERSONAL_APP_SETTINGS', silent=True)
+try:
+    app.config.from_envvar('PERSONAL_APP_SETTINGS')
+except RuntimeError:
+    class _Config:
+        DEBUG = os.environ.get('DEBUG', False)
+        HOST = os.environ.get('HOST')
+        EMAIL = os.environ.get('EMAIL')
+        GITHUB_PROFILE_URL = os.environ.get('GITHUB_PROFILE_URL')
+        LINKEDIN_PUBLIC_PROFILE_URL = os.environ.get('LINKEDIN_PUBLIC_PROFILE_URL')
+        SECRET_KEY = os.environ.get('SECRET_KEY')
+        CACHE_DIR = os.environ.get('CACHE_DIR')
+        LINKEDIN_API_KEY = os.environ.get('LINKEDIN_API_KEY')
+        LINKEDIN_API_SECRET = os.environ.get('LINKEDIN_API_SECRET')
+        LINKEDIN_USER_TOKEN = os.environ.get('LINKEDIN_USER_TOKEN')
+        LINKEDIN_USER_SECRET = os.environ.get('LINKEDIN_USER_SECRET')
+        MAIL_SERVER = os.environ.get('MAIL_SERVER')
+        MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+        MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+        MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
+    app.config.from_object(_Config)
+
 
 CsrfProtect().init_app(app)
 mail = Mail()
