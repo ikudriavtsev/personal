@@ -11,26 +11,19 @@ from linkedin.exceptions import LinkedInError
 
 
 app = Flask(__name__)
+# Read the config path from the env var if exists.
 try:
     app.config.from_envvar('PERSONAL_APP_SETTINGS')
+# Read the config vars one by one from the env vars prefixed with `PERSONAL_`.
 except RuntimeError:
     class _Config:
-        DEBUG = os.environ.get('DEBUG', False)
-        HOST = os.environ.get('HOST')
-        EMAIL = os.environ.get('EMAIL')
-        GITHUB_PROFILE_URL = os.environ.get('GITHUB_PROFILE_URL')
-        LINKEDIN_PUBLIC_PROFILE_URL = os.environ.get('LINKEDIN_PUBLIC_PROFILE_URL')
-        SECRET_KEY = os.environ.get('SECRET_KEY')
-        CACHE_DIR = os.environ.get('CACHE_DIR')
-        LINKEDIN_API_KEY = os.environ.get('LINKEDIN_API_KEY')
-        LINKEDIN_API_SECRET = os.environ.get('LINKEDIN_API_SECRET')
-        LINKEDIN_USER_TOKEN = os.environ.get('LINKEDIN_USER_TOKEN')
-        LINKEDIN_USER_SECRET = os.environ.get('LINKEDIN_USER_SECRET')
-        MAIL_SERVER = os.environ.get('MAIL_SERVER')
-        MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-        MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-        MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
-    app.config.from_object(_Config)
+        @classmethod
+        def configure(cls):
+            for k, v in os.environ.iteritems():
+                if k.startswith('PERSONAL_'):
+                    setattr(cls, k[9:], v)
+            return cls
+    app.config.from_object(_Config.configure())
 
 
 CsrfProtect().init_app(app)
@@ -73,12 +66,13 @@ def get_profile():
                 ])
                 # profile picture
                 profile['pictureUrls'] = application.get_picture_urls()
-                cache.set('profile', profile, timeout=30*24*60*60) # 30 days timeout
+                cache.set('profile', profile, timeout=30 * 24 * 60 * 60)  # 30 days timeout
             except LinkedInError as e:
                 profile = []
                 app.logger.warning('Caught an exception while trying to get the linkedin profile: %s' % e)
             g._profile = profile
     return profile
+
 
 profile = LocalProxy(get_profile)
 
@@ -97,11 +91,12 @@ def message():
             return render_template('short_message_form.html', form=form)
         # send an email if the form is valid
         msg = Message("I've just sent you a message from your personal site",
-            recipients=[app.config['EMAIL']],
-            reply_to=form.email.data)
+                      recipients=[app.config['EMAIL']],
+                      reply_to=form.email.data)
         msg.body = form.message.data
         mail.send(msg)
-        return "<div class='alert alert-success'>Thank you for the feedback. I will try to reply as soon as possible.</div>"
+        return '<div class="alert alert-success">Thank you for the feedback.' \
+               ' I will try to reply as soon as possible.</div>'
     abort(404)
 
 
@@ -109,7 +104,8 @@ def message():
 def pdf():
     pdf = compose_pdf(profile)
     response = make_response(pdf)
-    response.headers['Content-Disposition'] = 'attachment; filename="%s %s.pdf"' % (profile['firstName'], profile['lastName'])
+    response.headers['Content-Disposition'] = 'attachment; filename="%s %s.pdf"' % (profile['firstName'],
+                                                                                    profile['lastName'])
     response.mimetype = 'application/pdf'
     return response
 
