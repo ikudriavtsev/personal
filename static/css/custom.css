@@ -33,6 +33,12 @@ html, body {
     margin: 15px 0;
 }
 
+.skill-xs {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 98px;
+}
+
 /* Set the fixed height of the footer here */
 #push, #footer {
     height: 123px;
