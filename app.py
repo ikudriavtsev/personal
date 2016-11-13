@@ -95,7 +95,7 @@ def message():
                       reply_to=form.email.data)
         msg.body = form.message.data
         mail.send(msg)
-        return '<div class="alert alert-success">Thank you for the feedback.' \
+        return '<div class="alert alert-success">Thank you for your message.' \
                ' I will try to reply as soon as possible.</div>'
     abort(404)
 
