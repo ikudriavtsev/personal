@@ -63,6 +63,7 @@ def get_profile():
                     'skills',
                     'educations',
                     'recommendations-received',
+                    'projects'
                 ])
                 # profile picture
                 profile['pictureUrls'] = application.get_picture_urls()
